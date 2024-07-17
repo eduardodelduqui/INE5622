@@ -1,0 +1,2 @@
+int inta;
+inta = 3.0;
