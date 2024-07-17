@@ -7,6 +7,7 @@ from automatons.identifier import IdentifierAutomaton
 from automatons.punctuation import PunctuationAutomaton
 from automatons.assign import AssignAutomaton
 from token_component import Token
+from os import path
 
 class LexerError(Exception):
     pass
@@ -130,24 +131,9 @@ class AnalisadorLexico:
         if self.identifier_automaton.is_accepting() and not self.keyword_automaton.is_accepting():
             return "id"
 
-input = """
-def func1 ( int5 A , int B )
-{
-    int C = A + B ;
-    int D = B * C ;
-    return ;
-}
-def principal ()
-{
-    int C ;
-    int D ;
-    int R ;
-    C = 4 ;
-    D = 5.0 ;
-    R = func1 ( C , D ) ;
-    return ;
-}
-"""
+caminho = path.dirname(__file__) + "/testes/teste2.lsi"
+with open(caminho, 'r') as arquivo:
+    input = arquivo.read()
 
 lexer = AnalisadorLexico(input)
 tokens = lexer.get_tokens()
