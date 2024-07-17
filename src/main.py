@@ -8,6 +8,9 @@ from automatons.punctuation import PunctuationAutomaton
 from automatons.assign import AssignAutomaton
 from token_component import Token
 
+class LexerError(Exception):
+    pass
+
 class AnalisadorLexico:
     def __init__(self, input):
         self.input = input
@@ -43,35 +46,63 @@ class AnalisadorLexico:
             "type": '',
             "value": ''
         }
+
+    def get_token_values(self):
+        return [token.value for token in self.tokens]
         
     def get_tokens(self):
         lines = self.input.split('\n')
         
         for line_number, line in enumerate(lines, start=1):
             column_number = 1
-            words = line.split()
-            for word in words:
-                for char in word:
-                    tryToken = self.tryToken(char)
-                    if self.buffer["value"] and not tryToken:
+            word_position = 0
+            while word_position < len(line):
+                char = line[word_position].strip()
+
+                if not bool(char):
+                    if self.buffer["value"]:
                         token = Token(self.buffer["type"], self.buffer["value"], line_number, column_number - len(self.buffer["value"]))
                         self.tokens.append(token)
                         self.reset_automatons()
                         self.clear_buffer()
-                        tryToken = self.tryToken(char)
-                    if tryToken:
-                        self.buffer["value"] += char
-                        self.buffer["type"] = tryToken
-                    column_number += 1
-                
-                if self.buffer["value"]:
+                        continue
+                    else:
+                        self.reset_automatons()
+                        self.clear_buffer()
+                        column_number += 1
+                        word_position += 1
+                        continue
+
+                tryToken = self.tryToken(char)
+
+                # Se buffer tem valor e o tryToken é falso, tokeniza e reseta os autômatos
+                if self.buffer["value"] and not tryToken:
                     token = Token(self.buffer["type"], self.buffer["value"], line_number, column_number - len(self.buffer["value"]))
                     self.tokens.append(token)
                     self.reset_automatons()
-                    self.clear_buffer()            
+                    self.clear_buffer()
+                    continue  # Volta para reavaliar o mesmo caractere atual
+
+                # Adiciona o caractere atual ao buffer se tryToken é verdadeiro
+                if tryToken:
+                    self.buffer["value"] += char
+                    self.buffer["type"] = tryToken
+                    column_number += 1
+                    word_position += 1
+                else:
+                    raise LexerError(f"Caractere inesperado '{char}' na linha {line_number}, coluna {column_number}")
+
+                # Se buffer tem valor e estamos no fim da linha, tokeniza e reseta os autômatos
+                if self.buffer["value"] and word_position == len(line):
+                    token = Token(self.buffer["type"], self.buffer["value"], line_number, column_number - len(self.buffer["value"]))
+                    self.tokens.append(token)
+                    self.reset_automatons()
+                    self.clear_buffer()
+                    column_number += 1
+                    word_position += 1
 
         return self.tokens
-    
+
     def tryToken(self, char):
         self.number_automaton.process_char(char)
         self.relop_automaton.process_char(char)
@@ -100,7 +131,7 @@ class AnalisadorLexico:
             return "id"
 
 input = """
-def func1 ( int A , int B )
+def func1 ( int5 A , int B )
 {
     int C = A + B ;
     int D = B * C ;
@@ -112,7 +143,7 @@ def principal ()
     int D ;
     int R ;
     C = 4 ;
-    D = 5 ;
+    D = 5.0 ;
     R = func1 ( C , D ) ;
     return ;
 }
@@ -120,4 +151,5 @@ def principal ()
 
 lexer = AnalisadorLexico(input)
 tokens = lexer.get_tokens()
+token_values = lexer.get_token_values() #### Usar esse token_values caso queira pegar os valores
 print(tokens)
