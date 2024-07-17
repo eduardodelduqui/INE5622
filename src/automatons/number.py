@@ -14,13 +14,5 @@ class NumberAutomaton(Automaton):
 		elif self.state == "INTEGER":
 			if char.isdigit():
 				self.state = "INTEGER"
-			if char == ".":
-				self.state = "POINT"
 			else:
 				self.state = "NOT_A_NUMBER"
-
-		elif self.state == "POINT":
-			if char.isdigit():
-				self.state = "FLOAT"
-			else:
-				self.state = "ERROR"  

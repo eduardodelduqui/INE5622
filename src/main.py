@@ -6,7 +6,6 @@ from automatons.keyword import KeywordAutomaton
 from automatons.identifier import IdentifierAutomaton
 from automatons.punctuation import PunctuationAutomaton
 from automatons.assign import AssignAutomaton
-
 from token_component import Token
 
 class AnalisadorLexico:
@@ -29,7 +28,7 @@ class AnalisadorLexico:
         self.punctuation_automaton = PunctuationAutomaton()
         self.assign_automaton = AssignAutomaton()
 
-    def reset_automatons (self):
+    def reset_automatons(self):
         self.number_automaton.reset()
         self.relop_automaton.reset()
         self.bracket_automaton.reset()
@@ -46,33 +45,30 @@ class AnalisadorLexico:
         }
         
     def get_tokens(self):
-        self.input = self.input.replace('\n', ' ').split(' ')
-        self.length = len(self.input)
-
-        if self.position >= self.length:
-            return None
+        lines = self.input.split('\n')
         
-        for word in self.input:
-
-            for char in word:
-                tryToken = self.tryToken(char)
-                if self.buffer["value"] and not tryToken:
-                    token = Token(self.buffer["type"], self.buffer["value"])
+        for line_number, line in enumerate(lines, start=1):
+            column_number = 1
+            words = line.split()
+            for word in words:
+                for char in word:
+                    tryToken = self.tryToken(char)
+                    if self.buffer["value"] and not tryToken:
+                        token = Token(self.buffer["type"], self.buffer["value"], line_number, column_number - len(self.buffer["value"]))
+                        self.tokens.append(token)
+                        self.reset_automatons()
+                        self.clear_buffer()
+                        tryToken = self.tryToken(char)
+                    if tryToken:
+                        self.buffer["value"] += char
+                        self.buffer["type"] = tryToken
+                    column_number += 1
+                
+                if self.buffer["value"]:
+                    token = Token(self.buffer["type"], self.buffer["value"], line_number, column_number - len(self.buffer["value"]))
                     self.tokens.append(token)
                     self.reset_automatons()
-                    self.clear_buffer()
-                    tryToken = self.tryToken(char)
-                if tryToken:
-                    self.buffer["value"] += char
-                    self.buffer["type"] = tryToken
-        
-            
-            if (self.buffer["value"]):
-                token = Token(self.buffer["type"], self.buffer["value"])
-                self.tokens.append(token)
-
-                self.reset_automatons()
-                self.clear_buffer()
+                    self.clear_buffer()            
 
         return self.tokens
     
@@ -91,7 +87,7 @@ class AnalisadorLexico:
         if self.punctuation_automaton.is_accepting():
             return "punctuation"
         if self.number_automaton.is_accepting():
-            return "number"
+            return "num"
         if self.relop_automaton.is_accepting():
             return "relop"
         if self.bracket_automaton.is_accepting():
@@ -101,8 +97,7 @@ class AnalisadorLexico:
         if self.keyword_automaton.is_accepting():
             return "keyword"
         if self.identifier_automaton.is_accepting() and not self.keyword_automaton.is_accepting():
-            return "identifier"
-
+            return "id"
 
 input = """
 def func1 ( int A , int B )
@@ -123,7 +118,6 @@ def principal ()
 }
 """
 
-analisador_lexico = AnalisadorLexico(input)
-tokens = analisador_lexico.get_tokens()
-for token in tokens:
-    print(token)
+lexer = AnalisadorLexico(input)
+tokens = lexer.get_tokens()
+print(tokens)
