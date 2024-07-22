@@ -1,0 +1,17 @@
+def teste(int x, int y) {
+    if (x > y) {
+        return;
+    }
+    if (x < y) {
+        return;
+    }
+    if (x == y) {
+        return;
+    }
+    else {
+        return;
+    }
+    else {
+        return
+    }
+}

@@ -5,11 +5,11 @@ def somar(int x, int y) {
 }
 def subtrair(int x, int y) {
     int resultado;
-    resultado = x - y;
+    resultado = 3.5;
     return;
 }
-def resto(int x, int y) {
+def multiplicar(int x, int y) {
     int resultado;
-    resultado = x % y;
+    resultado = 3 * 5;
     return;
 }

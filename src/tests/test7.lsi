@@ -1,0 +1,15 @@
+def teste(int x, int y) {
+    int a;
+    if (x > y) {
+        return
+    }
+    if (x < y) {
+        return;
+    }
+    if (x == y) {
+        return;
+    }
+    else {
+        return;
+    }
+}

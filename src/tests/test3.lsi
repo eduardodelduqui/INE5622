@@ -1,3 +1,8 @@
+def divisao(int x, int y) {
+    int resultado;
+    resultado = x / y;
+    return;
+}
 def somar(int x, int y) {
     int resultado;
     resultado = x + y;
@@ -6,10 +11,5 @@ def somar(int x, int y) {
 def subtrair(int x, int y) {
     int resultado;
     resultado = x - y;
-    return;
-}
-def resto(int x, int y) {
-    int resultado;
-    resultado = x % y;
     return;
 }
