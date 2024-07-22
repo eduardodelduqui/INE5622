@@ -43,10 +43,12 @@ class KeywordAutomaton(Automaton):
             if char:
                 self.state = "ERROR"
         
-        # Handling 'int'
+        # Handling 'int' and IF
         elif self.state == "I":
             if char == "n":
                 self.state = "IN"
+            elif char == "f":
+                self.state = "IF"
             else:
                 self.state = "ERROR"
 
@@ -57,6 +59,10 @@ class KeywordAutomaton(Automaton):
                 self.state = "ERROR"
 
         elif self.state == "INT":
+            if char:
+                self.state = "ERROR"
+        
+        elif self.state == "IF":
             if char:
                 self.state = "ERROR"
         
@@ -124,12 +130,12 @@ class KeywordAutomaton(Automaton):
             if char:
                 self.state = "ERROR"
         
-        # Handling 'if'
-        elif self.state == "I":
-            if char == 'f':
-                self.state = "IF"
-            else:
-                self.state = "ERROR"
+        # # Handling 'if'
+        # elif self.state == "I":
+        #     if char == 'f':
+        #         self.state = "IF"
+        #     else:
+        #         self.state = "ERROR"
         
         # Handling 'else'
         elif self.state == "E":
