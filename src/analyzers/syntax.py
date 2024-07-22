@@ -20,7 +20,7 @@ class SyntaxAnalyzer:
       if parsing_stack_top.isupper():
         self.parsing_stack.pop()
         try:
-          production = self.parsing_table.get_production(parsing_stack_top, self.string[self.string_position])
+          production = self.parsing_table.get_production(parsing_stack_top, self.string, self.string_position)
         except KeyError as error:
           print("Erro!")
           print(f'Entrada vazia: Token "{self.string[self.string_position]}" Simbolo nao terminal "{parsing_stack_top}"')

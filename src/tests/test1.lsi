@@ -1,51 +1,50 @@
-int verdadeiro;
-int falso;
-falso = 0;
-verdadeiro = 1;
 def somar(int x, int y) {
-    int resultado = x + y;
-    return resultado;
+    int resultado;
+    resultado = x + y;
+    print(resultado);
 }
 def subtrair(int x, int y) {
-    int resultado = x - y;
-    return resultado;
+    int resultado;
+    resultado = x - y;
+    return;
 }
 def multiplicar(int x, int y) {
-    int resultado = x * y;
-    return resultado;
+    int resultado;
+    resultado = x * y;
+    return;
 }
 def maior(int x, int y) {
     if (x > y) {
-        return verdadeiro;
+        return;
     }
     else {
-        return falso;
+        return;
     }
 }
 def menor(int x, int y) {
     if (x < y) {
-        return verdadeiro
+        return;
     }
     else {
-        return falso;
+        return;
     }
 }
 def igual(int x, int y) {
     if (x == y) {
-        return verdadeiro
+        return;
     }
     else {
-        return falso;
+        return;
     }
 }
 def principal() {
-    int num1 = 3;
-    int num2 = 2;
-    int num3 = 1;
-    int produto = multiplicar(num2, num3);
-    int soma = somar(num2, num3);
-    int subtracao = subtrair(num1, num2);
-    print(num1 > num2);
-    print(7 < 3);
-    print(8 == 5);
+    int produto;
+    int soma;
+    int subtracao;
+    produto = multiplicar(num2, num3);
+    soma = somar(num2, num3);
+    subtracao = subtrair(num1, num2);
+    print(num1 + num2);
+    print(7 - 3);
+    print(8 * 5);
 }

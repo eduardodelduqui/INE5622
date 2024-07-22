@@ -34,5 +34,9 @@ class ParsingTable:
     }	
 		
 
-  def get_production(self, terminal, non_terminal):
-    return self.productions[terminal][non_terminal]
+  def get_production(self, non_terminal, string, string_position):
+    goal = string[string_position]
+    if non_terminal == "K" and goal == "b":
+      if string[string_position + 1] == "t":
+        return "R"
+    return self.productions[non_terminal][goal]

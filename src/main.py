@@ -2,7 +2,7 @@ from analyzers.lexical import LexicalAnalyzer
 from analyzers.syntax import SyntaxAnalyzer
 from os import path
 
-caminho = path.dirname(__file__) + "/tests/test6.lsi"
+caminho = path.dirname(__file__) + "/tests/test1.lsi"
 with open(caminho, 'r') as arquivo:
     input = arquivo.read()
 
@@ -36,5 +36,4 @@ tokens = list(map(lambda t : t.toString(), tokens))
 symbols = list(map(lambda t : terminal_to_symbol[t], tokens))
 syntax_input = ''.join(symbols)
 syntax = SyntaxAnalyzer()
-# print(syntax_input)
 syntax.process(syntax_input)

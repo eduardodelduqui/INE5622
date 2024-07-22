@@ -5,7 +5,6 @@ class ParsingStack:
   def push(self, value: str):
     for s in reversed(value):
       self.stack.append(s)
-    
     # print(self.stack)
     
 
