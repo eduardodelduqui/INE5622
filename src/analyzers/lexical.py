@@ -6,7 +6,7 @@ from automatons.keyword import KeywordAutomaton
 from automatons.identifier import IdentifierAutomaton
 from automatons.punctuation import PunctuationAutomaton
 from automatons.assign import AssignAutomaton
-from token_component import Token
+from utils.token_component import Token
 
 class LexerError(Exception):
     pass

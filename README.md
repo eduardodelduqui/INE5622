@@ -1,13 +1,12 @@
 # INE5622 - Analisador Léxico em Python
 
-Este projeto é um analisador léxico implementado em Python para a disciplina INE5622 - Introduçaõ a Compiladores, da Universidade Federal de Santa Catarina. Ele processa uma string de entrada e a divide em tokens que podem ser usados nas etapas posteriores de um compilador.
+Este projeto contem um analisador léxico e um analisador sintático implementado em Python para a disciplina INE5622 - Introduçaõ a Compiladores, da Universidade Federal de Santa Catarina. O analisador léxico processa uma string de entrada e a divide em tokens que serão verificados pelo analisador sintático para verificar se esses tokens estão de acordo com as regras gramáticais da linguagem LSI-2024-1
 
 ## Estrutura do Projeto
 
 ```
 src/
 /── main.py
-/── token_component.py
 /── automatons/
     ├── arithmetic.py
     ├── assign.py
@@ -18,12 +17,27 @@ src/
     ├── number.py
     ├── punctuation.py
     └── relop.py
+/── analyzers/
+    ├── lexical.py
+    └── syntax.py
+/── utils/
+    ├── parsing_stack.py
+    ├── parsing_table.py
+    └── token_component.py
+/── tests/
+    ├── test1.lsi
+    ├── test2.lsi
+    ├── test3.lsi
+    ├── test4.lsi
+    ├── test5.lsi
+    ├── test6.lsi
+    └── test7.lsi
 ```
 
 
 ### Arquivos e Pastas
 
-- **main.py**: Contém a lógica principal do analisador léxico.
+- **main.py**: Contém o arquivo que inicia a execução do programa. É nesse arquivo que os analisadores são instanciados.
 - **token_component.py**: Define a classe `Token`, que representa um token reconhecido pelo analisador.
 - **automatons/**: Contém as classes dos autômatos finitos para diferentes tipos de tokens. Cada arquivo implementa um autômato específico:
   - **arithmetic.py**: Autômato para operadores aritméticos.
@@ -32,9 +46,24 @@ src/
   - **bracket.py**: Autômato para parênteses e chaves.
   - **identifier.py**: Autômato para identificadores.
   - **keyword.py**: Autômato para palavras-chave.
-  - **number.py**: Autômato para números.
+  - **number.py**: Autômato para números inteiros.
   - **punctuation.py**: Autômato para pontuações.
   - **relop.py**: Autômato para operadores relacionais.
+- **analyzers/**: Contém as classes dos analisadores. Cada arquivo implementa um analisador específico:
+  - **lexical.py**: Analisador léxico.
+  - **syntax.py**: Analisador sintático.
+- **utils/**: Contém classes que dão suporte aos analisadores.
+  - **parsing_stack**: Implementa uma pilha para dar suporte a analise sintática
+  - **parsing_table**: Contem a tabela de reconhecimento sintático. Como a gramatica não eh LL(1), existe ambiguidades que são resolvidas tambem nessa classe.
+  - **token_component.py**: Define a classe `Token`, que representa um token reconhecido pelo léxico.
+- **tests/**: Contém arquivos escritos na linguagem LSI-2024-1 para fins de teste dos analisadores.
+  - **test1.lsi**: Teste sem erros sintaticos e léxicos
+  - **test2.lsi**: Teste com erro léxico. Token % não é reconhecido pela linguagem.
+  - **test3.lsi**: Teste com erro léxico. Token / não é reconhecido pela linguagem.
+  - **test4.lsi**: Teste com erro léxico. Numéro float não é reconhecido pela linguagem.
+  - **test5.lsi**: Teste com erro sintatico. Print com expressão relacional.
+  - **test6.lsi**: Teste com erro sintatico. Elses consecutivos
+  - **test7.lsi**: Teste com erro sintatico. Return sem ;
 
 ## Como Executar
 
@@ -53,29 +82,5 @@ python main.py
 ```
 
 ### Exemplo de Uso
-O arquivo main.py contém uma string de entrada que será analisada pelo analisador léxico. Aqui está um exemplo de como a entrada é definida e processada:
+O arquivo main.py na linha 5 contém uma string com o caminho dos arquivos de teste. Basta modificar o numero no fim para mudar o arquivo de teste
 
-```python
-input = """
-def func1 ( int A , int B )
-{
-    int C = A + B ;
-    int D = B * C ;
-    return ;
-}
-def principal ()
-{
-    int C ;
-    int D ;
-    int R ;
-    C = 4 ;
-    D = 5 ;
-    R = func1 ( C , D ) ;
-    return ;
-}
-"""
-
-```
-
-### Saída Esperada
-A saída será uma lista de tokens identificados na string de entrada. Cada token será representado pelo seu tipo e valor. Aqui está um exemplo de saída:
