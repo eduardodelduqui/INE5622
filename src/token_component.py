@@ -5,13 +5,13 @@ class Token:
     self.line = line
     self.column = column
 
-  # def __repr__(self):
-  #   if self.type == "id":
-  #     return "id"
-  #   elif self.type == "num":
-  #     return "num"
-  #   else:
-  #     return self.value
+  def __repr__(self):
+    if self.type == "id":
+      return "id"
+    elif self.type == "num":
+      return "num"
+    else:
+      return self.value
   def toString(self):
     if self.type == "id":
       return "id"
