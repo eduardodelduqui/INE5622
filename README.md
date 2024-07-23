@@ -1,6 +1,6 @@
 # INE5622 - Analisador Léxico em Python
 
-Este projeto contem um analisador léxico e um analisador sintático implementado em Python para a disciplina INE5622 - Introduçaõ a Compiladores, da Universidade Federal de Santa Catarina. O analisador léxico processa uma string de entrada e a divide em tokens que serão verificados pelo analisador sintático para verificar se esses tokens estão de acordo com as regras gramáticais da linguagem LSI-2024-1
+Este projeto contém um analisador léxico e um analisador sintático implementado em Python para a disciplina INE5622 - Introdução a Compiladores, da Universidade Federal de Santa Catarina. O analisador léxico processa uma string de entrada e a divide em tokens que serão verificados pelo analisador sintático para verificar se esses tokens estão de acordo com as regras gramaticais da linguagem LSI-2024-1
 
 ## Estrutura do Projeto
 
@@ -38,7 +38,6 @@ src/
 ### Arquivos e Pastas
 
 - **main.py**: Contém o arquivo que inicia a execução do programa. É nesse arquivo que os analisadores são instanciados.
-- **token_component.py**: Define a classe `Token`, que representa um token reconhecido pelo analisador.
 - **automatons/**: Contém as classes dos autômatos finitos para diferentes tipos de tokens. Cada arquivo implementa um autômato específico:
   - **arithmetic.py**: Autômato para operadores aritméticos.
   - **assign.py**: Autômato para operadores de atribuição.
@@ -54,16 +53,16 @@ src/
   - **syntax.py**: Analisador sintático.
 - **utils/**: Contém classes que dão suporte aos analisadores.
   - **parsing_stack**: Implementa uma pilha para dar suporte a analise sintática
-  - **parsing_table**: Contem a tabela de reconhecimento sintático. Como a gramatica não eh LL(1), existe ambiguidades que são resolvidas tambem nessa classe.
+  - **parsing_table**: Contém a tabela de reconhecimento sintático. Como a gramatica não é LL(1), existe ambiguidades que são resolvidas também nessa classe.
   - **token_component.py**: Define a classe `Token`, que representa um token reconhecido pelo léxico.
 - **tests/**: Contém arquivos escritos na linguagem LSI-2024-1 para fins de teste dos analisadores.
-  - **test1.lsi**: Teste sem erros sintaticos e léxicos
+  - **test1.lsi**: Teste sem erros sintáticos e léxicos
   - **test2.lsi**: Teste com erro léxico. Token % não é reconhecido pela linguagem.
   - **test3.lsi**: Teste com erro léxico. Token / não é reconhecido pela linguagem.
-  - **test4.lsi**: Teste com erro léxico. Numéro float não é reconhecido pela linguagem.
-  - **test5.lsi**: Teste com erro sintatico. Print com expressão relacional.
-  - **test6.lsi**: Teste com erro sintatico. Elses consecutivos
-  - **test7.lsi**: Teste com erro sintatico. Return sem ;
+  - **test4.lsi**: Teste com erro léxico. Número float não é reconhecido pela linguagem.
+  - **test5.lsi**: Teste com erro sintático. Print com expressão relacional.
+  - **test6.lsi**: Teste com erro sintático. Elses consecutivos
+  - **test7.lsi**: Teste com erro sintático. Return sem ;
 
 ## Como Executar
 
@@ -82,5 +81,5 @@ python main.py
 ```
 
 ### Exemplo de Uso
-O arquivo main.py na linha 5 contém uma string com o caminho dos arquivos de teste. Basta modificar o numero no fim para mudar o arquivo de teste
+O arquivo main.py na linha 5 contém uma string com o caminho dos arquivos de teste. Basta modificar o número no fim para mudar o arquivo de teste
 
